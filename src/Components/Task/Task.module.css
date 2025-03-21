@@ -1,0 +1,26 @@
+.edit:hover
+{
+    color: orange;
+}
+
+.trash:hover
+{
+    color: red;
+}
+
+.check:hover
+{
+    color: #198754;
+}
+
+.done
+{
+    background-color: #198754;
+    transition: background-color 1s;
+}
+
+.undo
+{
+    background-color: white;
+    transition: background-color 1s;
+}
