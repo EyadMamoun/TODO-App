@@ -1,32 +1,35 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { TaskContext } from '../Context/TaskContext'
 import { useNavigate } from 'react-router-dom';
 import TaskCSS from './Task.module.css'
 
 export default function Task({ task, index }) {
 
-    const { setTasks, setIndexToUpdate } = useContext(TaskContext);
+    const { tasks, setTasks, setIndexToUpdate } = useContext(TaskContext);
+    const [check, setCheck] = useState(false)
+
+    const navigate = useNavigate();
 
     function deleteTask(id) {
         setTasks(prevTasks => prevTasks.filter((_, idx) => idx !== id));
     }
 
-    const [check, setCheck] = useState(false)
-
     function checkTask() {
         setCheck(!check);
     }
-
-    const navigate = useNavigate();
 
     function editTask() {
         setIndexToUpdate(index);
         navigate('/updateTask');
     }
 
+    useEffect(() => {
+        localStorage.setItem('prevTasks', JSON.stringify(tasks))
+    }, [tasks])
+
     return <>
 
-        <div className={check ? TaskCSS.done +" container border rounded-4 my-4 shadow text-white" : TaskCSS.undo + " container border rounded-4 my-4  shadow"}>
+        <div className={check ? TaskCSS.done + " container border rounded-4 my-4 shadow text-white" : TaskCSS.undo + " container border rounded-4 my-4  shadow"}>
             <div className='d-flex align-items-center justify-content-between'>
                 <div className='py-4'>
                     <h3>{task.title}</h3>
